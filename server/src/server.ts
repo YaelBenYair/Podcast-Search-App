@@ -4,7 +4,12 @@ import cors from "cors";
 import helmet from "helmet";
 import compression from "compression";
 import { authRouter } from "./router/auth";
-import { podcastRouter } from "./router/podcast";
+import podcastRouter from "./router/podcast";
+import dotenv from "dotenv";
+import { connectMongoDB } from "./db";
+dotenv.config();
+
+connectMongoDB();
 
 //* initiate the express app
 const app: Express = express();

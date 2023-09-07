@@ -2,11 +2,12 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "module": "commonjs",
+  "main": "dist/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "serve": "tsc && node dist/server.js"
+    "start": "nodemon"
   },
   "keywords": [],
   "author": "",
@@ -14,8 +15,12 @@
   "dependencies": {
     "compression": "^1.7.4",
     "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "helmet": "^7.0.0"
+    "helmet": "^7.0.0",
+    "mongoose": "^7.5.0",
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1"
   },
   "devDependencies": {
     "@types/compression": "^1.7.3",
