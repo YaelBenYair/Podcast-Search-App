@@ -8,3 +8,8 @@ authRouter.get("/", (req: Request, res: Response) => {
   console.log(`This is a test ${req.query.test}`);
   res.send(`This is an auth router ${req.query.test}`);
 });
+
+authRouter.post("/", (req: Request, res: Response) => {
+  console.log(req.body);
+  res.send(`This is an auth router ${req.body.test}`);
+});
