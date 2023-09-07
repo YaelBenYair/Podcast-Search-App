@@ -1,4 +1,4 @@
-import { IAuth } from "../interfaces/auth";
+import { IAuth } from "../interfaces/authInterface";
 
 const auth1: IAuth = {
   name: "admin",

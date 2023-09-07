@@ -1,6 +1,12 @@
 import { Router } from "express";
 import { Request, Response } from "express";
-import * as podCostController from "../controllers/podcastController";
+import * as podCostController from "../DAL/podcastDAL";
+import {
+  getByIdPodcast,
+  getPodcast,
+  postPodcast,
+} from "../controllers/podcastController";
+
 const podcastRouter: Router = Router();
 
 type OurResponse = {
@@ -9,55 +15,10 @@ type OurResponse = {
   body: any;
 };
 
-podcastRouter.post("/", async (req: Request, res: Response) => {
-  try {
-    const newPodcast = await podCostController.createPodcast(req, res);
-    return res.status(200).json({
-      message: "Podcast created successfully",
-      status: 200,
-      body: newPodcast,
-    });
-  } catch (e: any) {
-    res.status(400).json({
-      message: e.message,
-      status: 400,
-      body: e,
-    });
-  }
-});
+podcastRouter.post("/", postPodcast);
 
-podcastRouter.get("/", async (req: Request, res: Response) => {
-  try {
-    const podcasts = await podCostController.getPodcasts();
-    return res.status(200).json({
-      message: "",
-      status: 200,
-      body: podcasts,
-    });
-  } catch (e: any) {
-    res.status(400).json({
-      message: e.message,
-      status: 400,
-      body: e,
-    });
-  }
-});
+podcastRouter.get("/", getPodcast);
 
-podcastRouter.get("/:id", async (req: Request, res: Response) => {
-  try {
-    const podcast = await podCostController.getPodcastById(req, res);
-    return res.status(200).json({
-      message: "",
-      status: 200,
-      body: podcast,
-    });
-  } catch (e: any) {
-    res.status(400).json({
-      message: e.message,
-      status: 400,
-      body: e,
-    });
-  }
-});
+podcastRouter.get("/:id", getByIdPodcast);
 
 export default podcastRouter;
