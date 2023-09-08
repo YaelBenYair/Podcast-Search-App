@@ -14,5 +14,6 @@ export interface IPodcast {
   date?: string;
   user?: string;
   likes?: number;
+  _id: any;
   episode: IEpisode[];
 }

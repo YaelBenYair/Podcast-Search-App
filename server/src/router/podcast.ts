@@ -6,6 +6,7 @@ import {
   getPodcast,
   postPodcast,
 } from "../controllers/podcastController";
+import admin from "../middelwares/adminMiddleware";
 
 const podcastRouter: Router = Router();
 
@@ -15,7 +16,8 @@ type OurResponse = {
   body: any;
 };
 
-podcastRouter.post("/", postPodcast);
+podcastRouter.post("/", admin as any, postPodcast);
+// podcastRouter.post("/", postPodcast);
 
 podcastRouter.get("/", getPodcast);
 

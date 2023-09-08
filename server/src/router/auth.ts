@@ -1,15 +1,12 @@
 import { Router } from "express";
 import { Request, Response } from "express";
+import auth from "../middelwares/authMiddleware";
+import { AuthorizedRequest } from "../interfaces/authInterface";
+import { getMe, postGetToken, postSignup } from "../controllers/authController";
 
 export const authRouter: Router = Router();
 
-authRouter.get("/", (req: Request, res: Response) => {
-  console.log(req);
-  console.log(`This is a test ${req.query.test}`);
-  res.send(`This is an auth router ${req.query.test}`);
-});
+authRouter.get("/me", auth as any, getMe as any);
 
-authRouter.post("/", (req: Request, res: Response) => {
-  console.log(req.body);
-  res.send(`This is an auth router ${req.body.test}`);
-});
+authRouter.post("/signin", postGetToken);
+authRouter.post("/signup", postSignup);

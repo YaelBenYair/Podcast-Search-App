@@ -1,4 +1,3 @@
-import { Router } from "express";
 import { Request, Response } from "express";
 import * as podCostController from "../DAL/podcastDAL";
 import { checkPodcastBodySchema } from "../middelwares/podcastMiddelwate";
@@ -21,8 +20,29 @@ const postPodcast = async (req: Request, res: Response) => {
   }
 };
 
+const updatePodcast = async (req: Request, res: Response) => {
+  try {
+    const body = checkPodcastBodySchema.parse(req.body);
+    const updatedPodcast = await podCostController.updatePodcast(body);
+    return res.status(200).json({
+      message: "Podcast updated successfully",
+      status: 200,
+      body: updatedPodcast,
+    });
+  } catch (e: any) {
+    res.status(400).json({
+      message: e.message,
+      status: 400,
+      body: e,
+    });
+  }
+};
+
 const getPodcast = async (req: Request, res: Response) => {
   try {
+    console.log(req.query);
+    const { name } = req.query;
+    console.log(name);
     const podcasts = await podCostController.getPodcasts();
     return res.status(200).json({
       message: "",
@@ -55,6 +75,6 @@ const getByIdPodcast = async (req: Request, res: Response) => {
   }
 };
 
-export { postPodcast, getPodcast, getByIdPodcast };
+export { postPodcast, getPodcast, getByIdPodcast, updatePodcast };
 
 //! check if there is an option to reduce the code
