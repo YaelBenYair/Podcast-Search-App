@@ -8,5 +8,5 @@ export const authRouter: Router = Router();
 
 authRouter.get("/me", auth as any, getMe as any);
 
-authRouter.post("/signin", postGetToken);
+authRouter.post("/login", postGetToken);
 authRouter.post("/signup", postSignup);

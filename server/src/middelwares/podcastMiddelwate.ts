@@ -5,7 +5,7 @@ const checkPodcastBodySchema = z.object({
   description: z.string().optional(),
   imageUrl: z.string().min(1),
   data: z.string().optional(),
-  user: z.string().optional(),
+  user: z.string(),
   likes: z.number().optional(),
   episode: z.array(
     z.object({
