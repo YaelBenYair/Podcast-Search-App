@@ -24,13 +24,15 @@ npm install
 ```
 
 ### Files to add
-Open the `.env` file and inside it, place:
-MONGO_URI= ""    Access key to the MongoDB database for connecting to the database
-JWT_SECRET= ""    Private key for authentication encryption."
+Open the `.env` file and inside it, add the following:
+```bash
+MONGO_URI=YOUR_MONGO_DB_ACCESS_KEY   # Access key to the MongoDB database for connecting.
+JWT_SECRET=YOUR_PRIVATE_JWT_SECRET   # Private key for authentication encryption.
+```
 
 ### Run
-- To run the server, write the command `npm start`.
-- To run the application, type the command `npm run dev`.
+- To run the server, use the following command `npm start`.
+- To run the application, use the following command `npm run dev`.
 
 
 
