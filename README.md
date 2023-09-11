@@ -24,7 +24,7 @@ npm install
 ```
 
 ### Files to add
-Open the `.env` file and inside it, add the following:
+Open the `.env` file located within the server directory and include the following configuration settings:
 ```bash
 MONGO_URI=YOUR_MONGO_DB_ACCESS_KEY   # Access key to the MongoDB database for connecting.
 JWT_SECRET=YOUR_PRIVATE_JWT_SECRET   # Private key for authentication encryption.
