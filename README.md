@@ -2,6 +2,18 @@
 Assignment: Podcast-Search-App
 Author: Yael Ben Yair
 
+# Podcast Search App
+
+**Author:** Yael Ben Yair
+
+## How to Run Locally
+
+### Clone Repository
+Clone this repository to your local machine using the following command:
+
+```bash
+git clone https://github.com/YaelBenYair/Podcast-Search-App.git
+
 ## How to run locally
 
 ### clone repository
