@@ -1,14 +1,31 @@
 import axios, { AxiosResponse } from "axios";
 
+axios.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 const sendRequest = async (
   method: "post" | "get" | "patch" | "put" | "delete",
   url: string,
-  accessToken: string,
-  data: { [key: string]: string | number }
+  data?: { [key: string]: any }
 ): Promise<AxiosResponse> => {
-  const header = accessToken ? { Authorization: `Bearer ${accessToken}` } : {};
-  const response = await axios[method](url, data, { headers: header });
+  console.log(data);
+  const response = await axios[method](url, data);
   return response;
 };
 
-export default sendRequest;
+const sendQueryRequest = async (
+  method: "post" | "get" | "patch" | "put" | "delete",
+  url: string,
+  queries?: URLSearchParams
+): Promise<AxiosResponse> => {
+  const requestUrl = queries ? `${url}?${queries.toString()}` : url;
+  console.log(requestUrl);
+  const response = await axios[method](requestUrl);
+  return response;
+};
+
+export { sendRequest, sendQueryRequest };

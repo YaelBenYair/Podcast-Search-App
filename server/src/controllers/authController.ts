@@ -4,6 +4,7 @@ import User from "../models/User";
 import { generateToken } from "../handlers/authHandlers";
 import { IUser } from "../interfaces/authInterface";
 import { AuthorizedRequest } from "../interfaces/authInterface";
+import { signUp } from "../DAL/authDAL";
 
 const postSignup = async (req: Request, res: Response) => {
   try {
@@ -30,11 +31,7 @@ const postSignup = async (req: Request, res: Response) => {
       .update(password)
       .digest("hex");
 
-    user = await User.create({
-      name,
-      email,
-      password: hashedPassword,
-    });
+    user = await signUp({ name, email, password: hashedPassword });
 
     const token = generateToken(user);
 
@@ -98,6 +95,7 @@ const postGetToken = async (req: Request, res: Response) => {
 const getMe = async (req: AuthorizedRequest, res: Response) => {
   try {
     const user = await User.findById(req.user.user_id).select("-password");
+
     return res.status(200).json({
       message: "",
       body: user,
@@ -112,4 +110,25 @@ const getMe = async (req: AuthorizedRequest, res: Response) => {
   }
 };
 
-export { postSignup, postGetToken, getMe };
+const userUpdate = async (req: AuthorizedRequest | any, res: Response) => {
+  try {
+    console.log(req.user.user_id);
+    console.log(req.body);
+    const user = await User.findByIdAndUpdate(req.user.user_id, req.body, {
+      returnOriginal: false,
+    });
+    return res.status(200).json({
+      message: "",
+      body: user,
+      status: 200,
+    });
+  } catch (e: any) {
+    res.status(500).json({
+      message: e.message,
+      body: e,
+      status: 500,
+    });
+  }
+};
+
+export { postSignup, postGetToken, getMe, userUpdate };

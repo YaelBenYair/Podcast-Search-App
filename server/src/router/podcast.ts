@@ -1,10 +1,10 @@
 import { Router } from "express";
 import { Request, Response } from "express";
-import * as podCostController from "../DAL/podcastDAL";
 import {
   getByIdPodcast,
   getPodcast,
   postPodcast,
+  updatePodcast,
 } from "../controllers/podcastController";
 import admin from "../middelwares/adminMiddleware";
 
@@ -17,6 +17,8 @@ type OurResponse = {
 };
 
 podcastRouter.post("/", admin as any, postPodcast);
+podcastRouter.put("/", admin as any, updatePodcast);
+
 // podcastRouter.post("/", postPodcast);
 
 podcastRouter.get("/", getPodcast);

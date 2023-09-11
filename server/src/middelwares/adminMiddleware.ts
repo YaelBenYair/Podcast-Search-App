@@ -25,7 +25,9 @@ export default function admin(
     if (!decoded) throw Error("Invalid token");
     console.log(decoded);
     if (!decoded.admin) return next("Insufficient authorities");
-    req.user = decoded._id;
+    console.log(`decoded.user_id: ${decoded}`);
+    console.log(`decoded.user_id: ${decoded.user_id}`);
+    req.user = decoded.user_id;
     next();
   } catch (e: any) {
     return next(e.message);

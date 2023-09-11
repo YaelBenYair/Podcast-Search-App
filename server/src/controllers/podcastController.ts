@@ -1,11 +1,14 @@
 import { Request, Response } from "express";
 import * as podCostController from "../DAL/podcastDAL";
 import { checkPodcastBodySchema } from "../middelwares/podcastMiddelwate";
+import { AuthorizedRequest } from "../interfaces/authInterface";
+import { IPodcast } from "../interfaces/podcastInterface";
 
-const postPodcast = async (req: Request, res: Response) => {
+const postPodcast = async (req: Request | any, res: Response) => {
   try {
+    req.body.user = req.user;
     const body = checkPodcastBodySchema.parse(req.body);
-    const newPodcast = await podCostController.createPodcast(body);
+    const newPodcast = await podCostController.createPodcast(req.body);
     return res.status(200).json({
       message: "Podcast created successfully",
       status: 200,
@@ -20,10 +23,12 @@ const postPodcast = async (req: Request, res: Response) => {
   }
 };
 
-const updatePodcast = async (req: Request, res: Response) => {
+const updatePodcast = async (req: Request | any, res: Response) => {
   try {
-    const body = checkPodcastBodySchema.parse(req.body);
-    const updatedPodcast = await podCostController.updatePodcast(body);
+    req.body.user = req.user;
+    const body = checkPodcastBodySchema.partial(req.body);
+    console.log(req.body);
+    const updatedPodcast = await podCostController.updatePodcast(req.body);
     return res.status(200).json({
       message: "Podcast updated successfully",
       status: 200,
@@ -43,7 +48,7 @@ const getPodcast = async (req: Request, res: Response) => {
     console.log(req.query);
     const { name } = req.query;
     console.log(name);
-    const podcasts = await podCostController.getPodcasts();
+    const podcasts = await podCostController.getPodcasts(name as string);
     return res.status(200).json({
       message: "",
       status: 200,

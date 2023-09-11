@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const PodCast = new mongoose.Schema({
-  name: { type: String, required: true },
+  name: { type: String, required: true ,index: true },
   description: { type: String, required: true },
   imageUrl: { type: String },
   date: { type: Date, default: Date.now },
@@ -14,5 +14,7 @@ const PodCast = new mongoose.Schema({
     },
   ],
 });
+
+
 
 export default mongoose.model("PodCast", PodCast);

@@ -14,6 +14,11 @@ const User = new mongoose.Schema({
     required: true,
   },
   isAdmin: { type: Boolean, default: false },
+  likes: [
+    {
+      podcast: { type: mongoose.Schema.Types.ObjectId, ref: "PodCast" },
+    },
+  ],
 });
 
 export default mongoose.model("User", User);

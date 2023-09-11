@@ -8,6 +8,7 @@ const createPodcast = async (podcastItem: Partial<IPodcast>) => {
 };
 
 const updatePodcast = async (podcastItem: Partial<IPodcast>) => {
+  console.log(podcastItem._id);
   const podcast = await Podcast.findByIdAndUpdate(
     podcastItem._id,
     podcastItem,
@@ -15,9 +16,11 @@ const updatePodcast = async (podcastItem: Partial<IPodcast>) => {
   );
   return podcast;
 };
-const getPodcasts = async () => {
-  return await Podcast.find({});
+
+const getPodcasts = async (query: string) => {
+  return await Podcast.find({ name: { $regex: query, $options: "i" } });
 };
+
 const getPodcastById = async (podcast_id: string) => {
   return await Podcast.findById(podcast_id);
 };
