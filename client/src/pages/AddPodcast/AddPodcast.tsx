@@ -1,27 +1,18 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { IPodcast } from "../../interface/PodcastInterface";
-import { Navigate, useParams } from "react-router";
-import { sendQueryRequest, sendRequest } from "../../function/SendRequest";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
+import { sendRequest } from "../../function/SendRequest";
 import { ENDPOINT } from "../../urls";
 import { message } from "antd";
 import { useNavigate } from "react-router-dom";
-import {
-  IEpisode,
-  PODCAST_ACTION,
-  usePodcast,
-} from "../../context/ContextPodcast";
+import { PODCAST_ACTION, usePodcast } from "../../context/ContextPodcast";
 import InputBase from "../../component/InputBase/InputBase";
-import { AiOutlineClose } from "react-icons/ai";
-import { GrFormAdd } from "react-icons/gr";
 import { BiImage } from "react-icons/bi";
+import EditEpisode from "../../component/EditEpisode/EditEpisode";
 
-type Maybe<T> = T | null | undefined;
+// type Maybe<T> = T | null | undefined;
 
 export default function AddPodcast() {
   const [error, setError] = useState<{ message: string } | null>(null);
-  const [podcastName, setPodcastName] = useState<string>("");
-  const [podcastImg, setPodcastImg] = useState<string>("");
-  const [episodes, setEpisodes] = useState<Array<IEpisode>>([]);
 
   const navigate = useNavigate();
 
@@ -36,21 +27,6 @@ export default function AddPodcast() {
       type: PODCAST_ACTION.RESET_PODCAST,
     });
   }, []);
-
-  const hendleDelete = (index: number) => {
-    console.log(index);
-    const epis = episodes.slice(index + 1);
-    console.log(epis);
-    setEpisodes([...epis]);
-    podcastDispatch({
-      type: PODCAST_ACTION.SET_PODCAST_EPISODE,
-      episode: epis,
-    });
-  };
-
-  const handleAddEpisode = () => {
-    setEpisodes([...episodes, { name: "", audioUrl: "" }]);
-  };
 
   // const podcast = usePodcastById(podcastId.id);
 
@@ -130,70 +106,14 @@ export default function AddPodcast() {
               nameLabel="Podcast Image Url"
               typeDispatch={PODCAST_ACTION.SET_PODCAST_IMAGE_URL}
             />
-
-            <label className=" mt-3 mb-3">Episode</label>
-            <div
-              onClick={handleAddEpisode}
-              className=" border-b-2 col-span-2 pl-4 pb-1 flex items-center text-lg dark:text-white cursor-pointer"
-            >
-              +{/* <GrFormAdd size={20} /> */}
-            </div>
           </div>
 
-          <div className="grid grid-cols-6 gap-3 mt-2">
-            {episodes.map((episode, index) => {
-              return (
-                <>
-                  <div
-                    onClick={() => hendleDelete(index)}
-                    className="flex items-end justify-center cursor-pointer hover:text-gray-500"
-                  >
-                    <AiOutlineClose />
-                  </div>
-
-                  <label className="col-start-2 col-end-3">Name</label>
-                  <input
-                    className="col-end-7 col-span-4 pl-4 pb-1 rounded-lg bg-gray-200 focus:border-gray-700 focus:bg-gray-200 dark:text-black focus:outline-none"
-                    type="text"
-                    name="name"
-                    id="name"
-                    onChange={(e) => {
-                      episodes[index].name = e.target.value;
-                      setEpisodes([...episodes]);
-                      podcastDispatch({
-                        type: PODCAST_ACTION.SET_PODCAST_EPISODE,
-                        episode: episodes,
-                      });
-                    }}
-                    value={episode.name}
-                    defaultValue={episode.name}
-                  />
-                  <label className="col-start-2 col-end-3">audioUrl</label>
-                  <input
-                    className="col-end-7 col-span-4 pl-4 pb-1 mb-3 rounded-lg bg-gray-200 focus:border-gray-700 focus:bg-gray-200 dark:text-black focus:outline-none"
-                    type="text"
-                    name="name"
-                    id="name"
-                    onChange={(e) => {
-                      episodes[index].audioUrl = e.target.value;
-                      setEpisodes([...episodes]);
-                      podcastDispatch({
-                        type: PODCAST_ACTION.SET_PODCAST_EPISODE,
-                        episode: episodes,
-                      });
-                    }}
-                    value={episode.audioUrl}
-                    defaultValue={episode.audioUrl}
-                  />
-                </>
-              );
-            })}
-          </div>
+          <EditEpisode />
 
           <div className="flex justify-end">
             <button
               type="submit"
-              className="w-[30%] h-min p-2 mt-8 rounded-lg bg-slate-400 object-cover hover:bg-slate-600 hover:text-white transition-all"
+              className="w-[30%] h-min p-2 my-8 rounded-lg bg-slate-400 object-cover hover:bg-slate-600 hover:text-white transition-all"
             >
               Add Podcast
             </button>

@@ -94,7 +94,7 @@ const Podcast = (props: IPodcastProps): JSX.Element => {
               alt="Modern building architecture"
             />
           </div>
-          <div className="p-2">
+          <div className="p-1 pl-2 pr-2">
             <div
               className=" pb-2 inline-block cursor-pointer"
               onClick={handleLike}
@@ -116,7 +116,7 @@ const Podcast = (props: IPodcastProps): JSX.Element => {
             <h6 className="block mt-1 text-lg leading-tight font-medium text-black dark:text-blue-900">
               {podcast.episode[0].name}
             </h6>
-            <p className="mt-2 h-[110px] text-slate-500 dark:text-white md:h-[75px] overflow-auto ... scroll-p-3">
+            <p className="mt-2 h-[110px] text-slate-500 dark:text-white md:h-[70px] overflow-auto ... scroll-p-3">
               {podcast.description}
             </p>
           </div>
